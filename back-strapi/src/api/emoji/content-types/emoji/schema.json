@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "emojis",
+  "info": {
+    "singularName": "emoji",
+    "pluralName": "emojis",
+    "displayName": "Emojis",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "character": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

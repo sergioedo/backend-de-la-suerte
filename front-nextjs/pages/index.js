@@ -1,8 +1,24 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import fetch from 'node-fetch'
 
-export default function Home() {
+export async function getServerSideProps(context) {
+  const res = await fetch(`${process.env.API_SERVER_URL}/api/emojis`, {
+    headers: {
+      'Authorization': `Bearer ${process.env.API_TOKEN}`
+    }
+  })
+  const data = await res.json()
+  return {
+    props: {
+      emojis: data.data
+    }
+  }
+}
+
+export default function Home({ emojis }) {
+  console.log(emojis)
   return (
     <div className={styles.container}>
       <Head>
@@ -21,7 +37,9 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-
+          <ul>
+            {emojis.map(emoji => <li key={emoji.id}><a href="/">{emoji.attributes.name} - {emoji.attributes.character}</a></li>)}
+          </ul>
         </div>
       </main>
     </div>

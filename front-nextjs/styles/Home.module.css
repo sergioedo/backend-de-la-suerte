@@ -1,6 +1,8 @@
 .container {
   padding: 0 2rem;
   height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1665&q=80");
+  background-size: cover;
 }
 
 .main {
@@ -28,6 +30,9 @@
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
+  color: beige;
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+    2px 2px 0 #000;
 }
 
 .title,
@@ -36,9 +41,12 @@
 }
 
 .description {
-  margin: 4rem 0;
+  /* margin: 4rem 0; */
   line-height: 1.5;
   font-size: 1.5rem;
+  color: beige;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .code {
@@ -51,6 +59,7 @@
 }
 
 .grid {
+  margin: 2rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,6 +100,36 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+}
+
+.myButton {
+  box-shadow: 0px 1px 0px 0px #1c1b18;
+  background: linear-gradient(to bottom, #eae0c2 5%, #ccc2a6 100%);
+  background-color: #eae0c2;
+  border-radius: 15px;
+  border: 2px solid #333029;
+  display: inline-block;
+  cursor: pointer;
+  color: #505739;
+  font-family: Arial;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 12px 16px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
+}
+.myButton:hover {
+  background: linear-gradient(to bottom, #ccc2a6 5%, #eae0c2 100%);
+  background-color: #ccc2a6;
+}
+.myButton:active {
+  position: relative;
+  top: 1px;
+}
+
+.myButton:disabled {
+  background: linear-gradient(to bottom, #cccccc 5%, #eeeeee 100%);
+  background-color: #cccccc;
 }
 
 @media (max-width: 600px) {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import fetch from 'node-fetch'
+import fetchSSR from 'node-fetch'
 import Alert from 'react-popup-alert'
 import 'react-popup-alert/dist/index.css'
 
@@ -17,7 +17,7 @@ const Wheel = dynamic(
 );
 
 export async function getServerSideProps(context) {
-  const res = await fetch(`${process.env.API_SERVER_URL}/api/emojis`, {
+  const res = await fetchSSR(`${process.env.API_SERVER_URL}/api/emojis`, {
     headers: {
       'Authorization': `Bearer ${process.env.API_TOKEN}`
     }
@@ -31,8 +31,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ emojis }) {
-  console.log(emojis)
-
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [alert, setAlert] = useState({
@@ -43,9 +41,13 @@ export default function Home({ emojis }) {
   const emojiOptions = emojis.map((emoji, idx) => ({ ...emoji, option: emoji.attributes.character }))
 
   const handleSpinClick = () => {
-    const newPrizeNumber = Math.floor(Math.random() * emojiOptions.length)
-    setPrizeNumber(newPrizeNumber)
-    setMustSpin(true)
+    fetch('api/find-gold')
+      .then((res) => res.json())
+      .then((data) => {
+        const prizeId = emojiOptions.findIndex((emoji) => emoji.id === data.id)
+        setPrizeNumber(prizeId)
+        setMustSpin(true)
+      })
   }
 
   const onCloseAlert = () => {
@@ -107,9 +109,7 @@ export default function Home({ emojis }) {
             ]}
             onStopSpinning={() => {
               setMustSpin(false);
-              console.log(prizeNumber)
               const emojiResult = emojiOptions[prizeNumber]
-              console.log(emojiResult)
               setAlert({
                 type: emojiResult.attributes.name === 'crown' ? 'success' : 'error',
                 header: emojiResult.attributes.character,

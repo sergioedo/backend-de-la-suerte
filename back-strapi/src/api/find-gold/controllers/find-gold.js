@@ -18,12 +18,22 @@ module.exports = {
         });
 
         const entities = await strapi.entityService.findMany('api::emoji.emoji', {
-            fields: ['name', 'character'],
+            fields: ['name', 'character', 'description'],
             filters,
         })
 
         const resultIndex = entities.length > 1 ? Math.floor(Math.random() * entities.length) : 0
 
-        return { data: entities[resultIndex], meta: {} }
+        const { id, name, character, description } = entities[resultIndex]
+        const emojiResult = {
+            id,
+            attributes: {
+                name,
+                character,
+                description
+            }
+        }
+
+        return { data: emojiResult, meta: {} }
     },
 };

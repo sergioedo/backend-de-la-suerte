@@ -25,6 +25,11 @@
     "description": {
       "type": "string",
       "required": true
+    },
+    "gold": {
+      "type": "boolean",
+      "default": false,
+      "required": false
     }
   }
 }

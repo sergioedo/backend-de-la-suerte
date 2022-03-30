@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "find_gold_counters",
+  "info": {
+    "singularName": "find-gold-counter",
+    "pluralName": "find-gold-counters",
+    "displayName": "find_gold_counter"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "gold_counter": {
+      "type": "integer",
+      "default": 5,
+      "max": 5,
+      "min": 0
+    }
+  }
+}

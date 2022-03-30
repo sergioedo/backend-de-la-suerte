@@ -3,6 +3,9 @@
 GET {{$dotenv API_SERVER_URL}}/api/emojis
 Authorization: Bearer {{$dotenv API_TOKEN}}
 
+### Buscar oro
+GET {{$dotenv API_SERVER_URL}}/api/find-gold/
+Authorization: Bearer {{$dotenv API_TOKEN}}
 
 ### Inserción de Emojis
 POST {{$dotenv API_SERVER_URL}}/api/emojis HTTP/1.1
@@ -13,7 +16,8 @@ Content-Type: application/json
     "data": { 
         "name": "grinning face", 
         "character": "😀",
-        "description": "Ohhhh! Prueba otra vez... pero no te preocupes! Con esa buena cara seguro que eres del equipo de las tortugas alegres! 🐢🐢🐢 Pero dale caña al diario!"
+        "description": "Ohhhh! Prueba otra vez... pero no te preocupes! Con esa buena cara seguro que eres del equipo de las tortugas alegres! 🐢🐢🐢 Pero dale caña al diario!",
+        "gold": false
     } 
 }
 
@@ -26,7 +30,8 @@ Content-Type: application/json
     "data": { 
         "name": "neutral face", 
         "character": "😐",
-        "description": "Lástima....y no pongas esa cara, ¿no serás del equipo de los suricatas...🦦🦦🦦? Ánimo y escribe en el diario, que te vendrá bien!"
+        "description": "Lástima....y no pongas esa cara, ¿no serás del equipo de los suricatas...🦦🦦🦦? Ánimo y escribe en el diario, que te vendrá bien!",
+        "gold": false
     } 
 }
 
@@ -39,7 +44,8 @@ Content-Type: application/json
     "data": { 
         "name": "partying face", 
         "character": "🥳",
-        "description": "Pues va a ser que no...pero esto se arregla con una buena fiesta!!!🎉🎉🎉"
+        "description": "Pues va a ser que no...pero esto se arregla con una buena fiesta!!!🎉🎉🎉",
+        "gold": false
     } 
 }
 
@@ -52,7 +58,8 @@ Content-Type: application/json
     "data": { 
         "name": "sleeping face", 
         "character": "😴",
-        "description": "Eh, tu! Despiertaaa!!! Deja la pereza y pon el foco en algo!🧐"
+        "description": "Eh, tu! Despiertaaa!!! Deja la pereza y pon el foco en algo!🧐",
+        "gold": false
     } 
 }
 
@@ -65,7 +72,8 @@ Content-Type: application/json
     "data": { 
         "name": "smiling face with sunglasses", 
         "character": "😎",
-        "description": "No te ha tocado nada...pero ni falta te hace!!! Estás a tope, el impostor hace tiempo que no asoma! Sigue así!🚀"
+        "description": "No te ha tocado nada...pero ni falta te hace!!! Estás a tope, el impostor hace tiempo que no asoma! Sigue así!🚀",
+        "gold": false
     }
 }
 
@@ -78,7 +86,8 @@ Content-Type: application/json
     "data": { 
         "name": "pile of poo", 
         "character": "💩",
-        "description": "Vaya...a alguien le tenía que caer el marrón...pero esto sólo puede mejorar!🔝🔝🔝"
+        "description": "Vaya...a alguien le tenía que caer el marrón...pero esto sólo puede mejorar!🔝🔝🔝",
+        "gold": false
     } 
 }
 
@@ -91,7 +100,8 @@ Content-Type: application/json
     "data": { 
         "name": "crown", 
         "character": "👑",
-        "description": "Enhorabuena!!!! Has encontrado ORO!!!! Ahora te toca pensar qué haces con el...🤔"
+        "description": "Enhorabuena!!!! Has encontrado ORO!!!! Ahora te toca pensar qué haces con el...🤔",
+        "gold": true
     } 
 }
 
@@ -104,8 +114,18 @@ Content-Type: application/json
     "data": { 
         "name": "laptop", 
         "character": "💻",
-        "description": "No es ORO...pero como buen developer, basta con poder picar un poco de código más...🤓"
+        "description": "No es ORO...pero como buen developer, basta con poder picar un poco de código más...🤓",
+        "gold": false
     } 
 }
 
+###
+POST {{$dotenv API_SERVER_URL}}/api/find-gold-counters HTTP/1.1
+Authorization: Bearer {{$dotenv API_TOKEN_ADMIN}}
+Content-Type: application/json
 
+{ 
+    "data": { 
+        "gold_counter": 3
+    } 
+}

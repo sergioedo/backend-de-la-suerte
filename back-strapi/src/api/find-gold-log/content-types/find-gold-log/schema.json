@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "find_gold_logs",
+  "info": {
+    "singularName": "find-gold-log",
+    "pluralName": "find-gold-logs",
+    "displayName": "find_gold_log",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "emoji_character": {
+      "type": "string",
+      "required": true
+    },
+    "is_gold": {
+      "type": "boolean",
+      "required": true
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "user_email": {
+      "type": "email"
+    },
+    "username": {
+      "type": "string"
+    }
+  }
+}

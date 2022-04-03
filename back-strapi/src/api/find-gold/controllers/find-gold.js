@@ -34,6 +34,18 @@ module.exports = {
             }
         }
 
+        // Register on find-gold-log
+        console.log('User Id', JSON.stringify(ctx.state.user))
+        const entryLog = await strapi.entityService.create('api::find-gold-log.find-gold-log', {
+            data: {
+                emoji_character: emojiResult.attributes.character,
+                is_gold: goldFound,
+                user_id: ctx.state.user && ctx.state.user.id,
+                username: ctx.state.user && ctx.state.user.username,
+                user_email: ctx.state.user && ctx.state.user.email
+            },
+        });
+
         return { data: emojiResult, meta: {} }
     },
 };

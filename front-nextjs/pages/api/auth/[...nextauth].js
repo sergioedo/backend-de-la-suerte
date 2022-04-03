@@ -24,7 +24,7 @@ const options = {
             console.log('jwt callback', { token, user, account })
             const isSignIn = user ? true : false;
             if (isSignIn) {
-                const strapiAuthURL = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
+                const strapiAuthURL = `${process.env.API_SERVER_URL}/api/auth/${account.provider}/callback?access_token=${account?.access_token}`
                 console.log({ strapiAuthURL })
                 const response = await fetch(strapiAuthURL)
                 const data = await response.json()

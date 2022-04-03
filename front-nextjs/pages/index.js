@@ -5,6 +5,8 @@ import styles from '../styles/Home.module.css'
 import fetchSSR from 'node-fetch'
 import Alert from 'react-popup-alert'
 import 'react-popup-alert/dist/index.css'
+import { getSession, signIn, signOut } from "next-auth/react"
+import Link from "next/link"
 
 // import { Wheel } from "react-custom-roulette"
 // https://github.com/effectussoftware/react-custom-roulette/issues/4
@@ -16,7 +18,8 @@ const Wheel = dynamic(
   { ssr: false }
 );
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req })
   const res = await fetchSSR(`${process.env.API_SERVER_URL}/api/emojis`, {
     headers: {
       'Authorization': `Bearer ${process.env.API_TOKEN}`
@@ -25,12 +28,45 @@ export async function getServerSideProps(context) {
   const data = await res.json()
   return {
     props: {
-      emojis: data.data
+      emojis: data.data,
+      session
     }
   }
 }
 
-export default function Home({ emojis }) {
+const gitHubStyle = { background: 'linear-gradient(to bottom, #cccccc 5%, #eeeeee 100%)', backgroundColor: '#cccccc' }
+
+const SignInButton = () => {
+  return (
+    <Link href="/api/auth/signin">
+      <button className={styles.myButton} style={gitHubStyle}
+        onClick={(e) => {
+          e.preventDefault();
+          signIn('github');
+        }}
+      >
+        Login <img src="/icons8-github.svg" alt="Github" />
+      </button>
+    </Link>
+  );
+};
+
+const SignOutButton = ({ avatarURL }) => {
+  return (
+    <Link href="/api/auth/signout">
+      <button className={styles.myButton} style={{ padding: '4px 8px 4px 8px', fontSize: '16px', ...gitHubStyle }}
+        onClick={(e) => {
+          e.preventDefault();
+          signOut();
+        }}
+      >
+        <img className={styles.avatar} src={avatarURL} /> Salir
+      </button>
+    </Link>
+  );
+};
+
+export default function Home({ emojis, session }) {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [alert, setAlert] = useState({
@@ -58,6 +94,8 @@ export default function Home({ emojis }) {
     })
   }
 
+  if (session) console.log({ session })
+
   return (
     <div className={styles.container}>
       <Head>
@@ -66,22 +104,34 @@ export default function Home({ emojis }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <div className={styles.navbar}>
+        {session && <SignOutButton avatarURL={session.user && session.user.image} />}
+      </div>
+
       <main className={styles.main}>
         <h1 className={styles.title}>
           Bienvenido 🤠 a la búsqueda del 👑!!!
         </h1>
 
         <p className={styles.description}>
-          Prueba suerte, pica un poco y a ver que encuentras...
+          {session
+            ? 'Prueba suerte, pica un poco y a ver que encuentras...'
+            : 'Para poder jugar...dime quién eres'
+          }
         </p>
 
         <span>
-          <button className={styles.myButton}
-            disabled={mustSpin}
-            onClick={handleSpinClick}
-          >
-            {mustSpin ? 'Suerte!!!' : 'A picar!!! ⛏'}
-          </button>
+          <section className={styles.actions}>
+            {!session && <SignInButton />}
+            {session &&
+              <button className={styles.myButton}
+                disabled={mustSpin}
+                onClick={handleSpinClick}
+              >
+                {mustSpin ? 'Suerte!!!' : 'A picar!!! ⛏'}
+              </button>
+            }
+          </section>
         </span>
 
         <div className={styles.grid}>

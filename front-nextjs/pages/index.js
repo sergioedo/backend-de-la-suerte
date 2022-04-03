@@ -77,7 +77,7 @@ export default function Home({ emojis, session }) {
   const emojiOptions = emojis.map((emoji, idx) => ({ ...emoji, option: emoji.attributes.character }))
 
   const handleSpinClick = () => {
-    fetch('api/find-gold')
+    fetch('api/user/find-gold')
       .then((res) => res.json())
       .then((data) => {
         const prizeId = emojiOptions.findIndex((emoji) => emoji.id === data.id)
